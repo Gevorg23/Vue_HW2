@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details</title>
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+
+const ProductDetails = {
+  props: {
+    product: {
+      type: Object,
+      required: true,
+    },
+  },
+  template: `
+    <div>
+      <h2>{{ product.name }}</h2>
+      <p>{{ formattedPrice }}</p>
+      <p>{{ availabilityText }}</p>
+    </div>
+  `,
+  computed: {
+    formattedPrice() {
+      const price = this.product.price;
+      return `$${price.toFixed(2)}`;
+    },
+    availabilityText() {
+      const available = this.product.available;
+      return available ? 'Available' : 'Out of stock';
+    },
+  },
+};
+
+const app = Vue.createApp({
+  data() {
+    return {
+      productData: {
+        name: 'Example Product',
+        price: 99.99,
+        available: true,
+      },
+    };
+  },
+});
+
+app.component('product-details', ProductDetails);
+app.mount('#app');
+</script>
+
+</body>
+</html>
